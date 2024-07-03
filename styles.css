@@ -2,24 +2,27 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f8f8f8;
+    background-color: #575757;
     text-align: center;
     color: #333;
 }
 
 header {
     background-color: #0078d4;
-    color: #fff;
+    color: #ffffff;
     padding: 20px 0;
+    font-size: 18px;
+    text-shadow: 0 0 5px black;
 }
 
 .container {
     max-width: 800px;
     margin: 40px auto;
     padding: 20px;
-    background-color: #fff;
+    background-color: #ffffff33;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
 }
 
 .status {
@@ -28,10 +31,9 @@ header {
     justify-content: left;
     margin: 20px 0;
     padding: 10px;
-    background-color: #f9f9f9;
+    background-color: #f9f9f927;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-    cursor: pointer;
 }
 
 .status-indicator {
@@ -75,3 +77,30 @@ footer {
     bottom: 0;
     width: 100%;
 }
+.logo {
+    width: 100px;
+    border-radius: 50%; 
+    box-shadow: 0 0 20px black;
+    transition: all 0.3s ease-in-out;
+}
+
+.lut {
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
+    margin-top: -30px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.status1 {
+    margin: 5px 0;
+    padding: 10px;
+    background-color: #cacaca;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 1.0);
+}
+
+
