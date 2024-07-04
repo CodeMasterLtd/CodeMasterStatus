@@ -8,19 +8,19 @@ document.addEventListener("DOMContentLoaded", function() {
         { id: 'npc', url: 'https://numberplatecreator.netlify.app/' },
         { id: 'fmlua', url: 'https://vehiclefxmanifestgenerator.netlify.app/' },
         { id: 'discord', url: 'https://discord.g/XcEHvPR9qA' },
-        { id: 'mail', url: 'info@codemaster.ltd' }
     ];
 
     const overallStatusText = document.getElementById('overall-status-text');
     const lastUpdatedTime = document.getElementById('last-updatedTime');
+    const dis = document.getElementById(`discord-message`);
+    const dis1 = document.getElementById(`discord-status`);
 
-    let allow = true;
+    let allow = false;
+    let message = true;
 
     function ManualErrors() {
         if (allow) {
             allow = true;
-        const dis = document.getElementById(`discord-message`);
-        const dis1 = document.getElementById(`discord-status`);
 
         dis1.classList.add('status-fixing');
         dis.style.color = '#ffc107';
@@ -28,12 +28,20 @@ document.addEventListener("DOMContentLoaded", function() {
         } else {
             allow = false;
         }
-        return allow;
+        if (!allow && message) {
+            message = true;
+            dis1.classList.add('status-fixing2');
+            dis.style.color = '#ffc107';
+            dis.textContent = 'We are Working On It';
+        } else {
+            message = false;
+        }
+        return allow, message;
     }
 
     // Function to get the current time in minutes
     function getCurrentMinutes() {
-        return Math.floor(new Date().getTime() / (1000 * 60));
+        return new Date().getMinutes();
     }
 
     // Function to update last updated time
@@ -102,8 +110,8 @@ document.addEventListener("DOMContentLoaded", function() {
     
         // Define messages and corresponding times
         const outageMessages = [
-            { time: 0, message: "Major Outage Detected", color: '#dc3545', class: 'status-down' }, // Red
-            { time: 10, message: "Problem is Being Investigated", color: '#ffc107', class: 'status-fixing' }, // Orange
+            { time: 1, message: "Major Outage Detected", color: '#dc3545', class: 'status-down' }, // Red
+            { time: 0, message: "Problem is Being Investigated", color: '#ffc107', class: 'status-fixing' }, // Orange
             { time: 20, message: "Problem Solved", color: '#28a745', class: 'status-up' } // Green
         ];
     
@@ -118,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if (messageObj) {
                 statusMessage.textContent = messageObj.message;
                 statusMessage.style.color = messageObj.color;
-                statusMessage.style.backgroundColor = 'black';
+                statusMessage.style.backgroundColor = '#0000007e';
                 statusMessage.style.padding = '5px';
                 statusMessage.style.borderRadius = '50px';
                 statusMessage.style.fontWeight = 'bold';
@@ -194,7 +202,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 overallStatusText.style.color = '#dc3545';
                 overallStatusText.style.textShadow = '0 0 5px black';
                 overallStatusText.textContent = `Outage on ${outageCount} service${outageCount > 1 ? 's' : ''}`;
-            } if (allow === true && outageCount === 1) {
+            } if (allow === true || message === true && outageCount === 1) {
                 overallStatusText.style.color = '#ffc107';
                 overallStatusText.textContent = `Resolving issues on ${outageCount} service${outageCount > 1 ? 's' : ''}`;
             } else {
@@ -220,4 +228,24 @@ document.addEventListener("DOMContentLoaded", function() {
     setInterval(periodicCheck, 30 * 1000);
 
     window.setStatus = setStatus;
+
+    const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+            const currentTheme = localStorage.getItem("theme");
+
+            if (currentTheme == "dark" || (currentTheme === null && prefersDarkScheme.matches)) {
+                document.body.classList.add("dark-mode");
+            } else {
+                document.body.classList.remove("dark-mode");
+            }
+
+            const themeSwitcher = document.getElementById("theme-switcher");
+            themeSwitcher.addEventListener("click", function() {
+                if (document.body.classList.contains("dark-mode")) {
+                    document.body.classList.remove("dark-mode");
+                    localStorage.setItem("theme", "light");
+                } else {
+                    document.body.classList.add("dark-mode");
+                    localStorage.setItem("theme", "dark");
+                }
+            });
 });

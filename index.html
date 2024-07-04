@@ -5,87 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="https://codemaster.ltd/cdn/shop/files/codemaster_1.jpg?v=1719057471&width=140" type="image/png">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Status | Code Master</title>
 </head>
 <body>
     <header>
-        <img src="https://codemaster.ltd/cdn/shop/files/codemaster_1.jpg?v=1719057471&width=140" alt="CodeMaster Logo" class="logo">
+        <a href="https://codemaster.ltd" target="_blank"><img  src="https://codemaster.ltd/cdn/shop/files/codemaster_1.jpg?v=1719057471&width=140" alt="CodeMaster Logo" class="logo"></a>
         <h1>Code Master Status</h1>
     </header>
     <div class="container">
+        <button id="theme-switcher">Switch Theme</button>
         <div class="status1" id="overall-status">
-            <span id="overall-status-indicator" class="status-indicator"></span>
+            <i id="overall-status-indicator" class="status-indicator"></i>
             <span id="overall-status-text">Checking...</span>
             <div>
-            <span id="last-updatedTime" class="lut"></span>
-        </div>
+                <span id="last-updatedTime" class="lut"></span>
+            </div>
         </div>
         <!-- Social -->
         <div class="status-category" id="services">
             <h2>Services</h2>
-            <div class="status" id="mail">
-                <span id="mail-status" class="status-indicator"></span>
-                <span><strong>Code Master Email</strong> - <span id="mail-text">Checking...</span><span id="mail-message"></span></span>
-            </div>
-
             <div class="status" id="discord">
-                <span id="discord-status" class="status-indicator"></span>
+                <i id="discord-status" class="status-indicator"></i>
                 <span><strong>Code Master Discord</strong> - <span id="discord-text">Checking...</span><span id="discord-message"></span></span>
             </div>
-
-
-
             <!-- Add other social services as needed -->
         </div>
-
         <!-- Games -->
         <div class="status-category">
             <h2>Games</h2>
             <div class="status" id="ltcg">
-                <span id="ltcg-status" class="status-indicator"></span>
+                <i id="ltcg-status" class="status-indicator"></i>
                 <span><strong>Learn To Code Game</strong> - <span id="ltcg-text">Checking...</span><span id="ltcg-message"></span></span>
             </div>
-
             <div class="status" id="cmc">
-                <span id="cmc-status" class="status-indicator"></span>
+                <i id="cmc-status" class="status-indicator"></i>
                 <span><strong>Code Master Challenge</strong> - <span id="cmc-text">Checking...</span><span id="cmc-message"></span></span>
             </div>
-
             <!-- Add other web services as needed -->
         </div>
-
         <!-- Tools -->
         <div class="status-category">
             <h2>Tools</h2>
-
             <div class="status" id="npc">
-                <span id="npc-status" class="status-indicator"></span>
+                <i id="npc-status" class="status-indicator"></i>
                 <span><strong>Number Plate Creator</strong> - <span id="npc-text">Checking...</span><span id="npc-message"></span></span>
             </div>
-
             <div class="status" id="fmlua">
-                <span id="fmlua-status" class="status-indicator"></span>
+                <i id="fmlua-status" class="status-indicator"></i>
                 <span><strong>Fxmanifest Generator</strong> - <span id="fmlua-text">Checking...</span><span id="fmlua-message"></span></span>
             </div>
-
             <div class="status" id="vng">
-                <span id="vng-status" class="status-indicator"></span>
+                <i id="vng-status" class="status-indicator"></i>
                 <span><strong>Vehicle Names Generator</strong> - <span id="vng-text">Checking...</span><span id="vng-message"></span></span>
             </div>
-
             <div class="status" id="pft">
-                <span id="pft-status" class="status-indicator"></span>
+                <i id="pft-status" class="status-indicator"></i>
                 <span><strong>Personal Finance Tracker</strong> - <span id="pft-text">Checking...</span><span id="pft-message"></span></span>
             </div>
-
             <!-- Add other game services as needed -->
         </div>
     </div>
-    <br></br>
     <footer>
         &copy; 2024 <a href="https://codemaster.ltd" target="_blank"><strong>Code Master</strong></a>. All rights reserved.
-    </footer>    
+    </footer>
     <script src="script.js"></script>
 </body>
-
 </html>
