@@ -13,8 +13,8 @@
         <a href="https://codemaster.ltd" target="_blank"><img  src="https://codemaster.ltd/cdn/shop/files/codemaster_1.jpg?v=1719057471&width=140" alt="CodeMaster Logo" class="logo"></a>
         <h1>Code Master Status</h1>
     </header>
+    <button id="theme-switcher"></button>
     <div class="container">
-        <button id="theme-switcher"></button>
         <div class="status1" id="overall-status">
             <i id="overall-status-indicator" class="status-indicator"></i>
             <span id="overall-status-text">Checking...</span>
@@ -22,9 +22,8 @@
                 <span id="last-updatedTime" class="lut"></span>
             </div>
         </div>
-        </div>
         <!-- Social -->
-        <div class="status-category" id="services">
+        <div class="status-category" id="services" data-tilt data-tilt-glare data-tilt-max-glare="0.5">
             <h2>Services</h2>
             <div class="status" id="discord">
                 <i id="discord-status" class="status-indicator"></i>
@@ -33,7 +32,7 @@
             <!-- Add other social services as needed -->
         </div>
         <!-- Games -->
-        <div class="status-category">
+        <div class="status-category" data-tilt data-tilt-glare data-tilt-max-glare="0.5">
             <h2>Games</h2>
             <div class="status" id="ltcg">
                 <i id="ltcg-status" class="status-indicator"></i>
@@ -46,7 +45,7 @@
             <!-- Add other web services as needed -->
         </div>
         <!-- Tools -->
-        <div class="status-category">
+        <div class="status-category" data-tilt data-tilt-glare data-tilt-max-glare="0.5">
             <h2>Tools</h2>
             <div class="status" id="npc">
                 <i id="npc-status" class="status-indicator"></i>
@@ -71,5 +70,6 @@
         &copy; 2024 <a href="https://codemaster.ltd" target="_blank"><strong>Code Master</strong></a>. All rights reserved.
     </footer>
     <script src="script.js"></script>
+    <script src ="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
 </body>
 </html>

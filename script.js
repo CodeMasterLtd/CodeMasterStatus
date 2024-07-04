@@ -262,3 +262,11 @@ function periodicCheck() {
                 }
             });
 });
+
+VaniliaTilt.init(document.querySelectorAll(".container"), {
+    max: 25,
+    speed: 400,
+    glare: true,
+    reverse: true,
+    "max-glare": 0.5,
+});
