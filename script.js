@@ -1,105 +1,224 @@
 document.addEventListener("DOMContentLoaded", function() {
+
     const websites = [
-        { id: 'website1', url: 'https://www.codemaster.ltd' },
-        { id: 'website2', url: 'https://learntocodegame.netlify.app/' },
-        { id: 'website3', url: 'https://codemasterchallenge.netlify.app/' },
-        { id: 'website4', url: 'https://vehiclenamesgenerator.netlify.app/' },
-        { id: 'website5', url: 'https://personalfinancetrack.netlify.app/' },
-        { id: 'website6', url: 'https://numberplatecreator.netlify.app/' },
-        { id: 'website7', url: 'https://vehiclefxmanifestgenerator.netlify.app/' }
+        { id: 'ltcg', url: 'https://learntocodegame.netlify.app/' },
+        { id: 'cm', url: 'https://codemaster.ltd/' },
+        { id: 'cmc', url: 'https://codemasterchallenge.netlify.app/' },
+        { id: 'vng', url: 'https://vehiclenamesgenerator.netlify.app/' },
+        { id: 'pft', url: 'https://personalfinancetrack.netlify.app/' },
+        { id: 'npc', url: 'https://numberplatecreator.netlify.app/' },
+        { id: 'fmlua', url: 'https://vehiclefxmanifestgenerator.netlify.app/' },
+        { id: 'discord', url: 'https://discord.g/XcEHvPR9qA' },
+        { id: 'mail', url: 'mailto:info@codemaster.ltd' }
     ];
 
-    const overallStatusIndicator = document.getElementById('overall-status-indicator');
     const overallStatusText = document.getElementById('overall-status-text');
     const lastUpdatedTime = document.getElementById('last-updatedTime');
 
-    // Initialize startTime
-    let startTime = new Date();
+    let allow = true;
+
+    function ManualErrors() {
+        if (allow) {
+            allow = true;
+        const dis = document.getElementById(`discord-message`);
+        const dis1 = document.getElementById(`discord-status`);
+
+        dis1.classList.add('status-fixing');
+        dis.style.color = '#ffc107';
+        dis.textContent = 'Problem is Being Investigated';
+        } else {
+            allow = false;
+        }
+        return allow;
+    }
+
+    // Function to get the current time in minutes
+    function getCurrentMinutes() {
+        return Math.floor(new Date().getTime() / (1000 * 60));
+    }
 
     // Function to update last updated time
     function updateLastUpdatedTime() {
-        const now = new Date();
-        const minutesAgo = Math.round((now - startTime) / (1000 * 60));
-        if (minutesAgo === 0) {
+        const lastUpdateMinutes = localStorage.getItem('lastUpdateTime');
+        const currentMinutes = getCurrentMinutes();
+        localStorage.setItem('lastUpdateTime', currentMinutes);
+    
+        const minutesAgo = currentMinutes - (lastUpdateMinutes || currentMinutes);
+    
+        if (minutesAgo <= 0) {
             lastUpdatedTime.textContent = 'Last updated: just now';
         } else {
-            lastUpdatedTime.textContent = `Last updated: ${minutesAgo} min${minutesAgo > 1 ? 's' : ''} ago`;
+            lastUpdatedTime.textContent = `Last updated: ${minutesAgo} minute${minutesAgo > 1 ? 's' : ''} ago`;
         }
     }
-
-    // Check status of each website and update every 30 seconds
-    setInterval(() => {
-        let allUp = true;
-        let outageCount = 0;
-
-        websites.forEach(website => {
-            checkStatus(website.id, website.url, (isUp) => {
-                if (!isUp) {
-                    allUp = false;
-                    outageCount++;
-                }
-            });
-        });
-
-        // Update overall status message
-        if (outageCount === 0) {
-            overallStatusIndicator.classList.add('status-up');
-            overallStatusIndicator.classList.remove('status-down');
-            overallStatusText.style.fontWeight = 'bold';
-            overallStatusText.style.color = 'green';
-            overallStatusText.textContent = 'All services up and running';
-        } else {
-            overallStatusIndicator.classList.add('status-down');
-            overallStatusIndicator.classList.remove('status-up');
-            overallStatusText.style.fontWeight = 'bold';
-            overallStatusText.style.color = 'red';
-            overallStatusText.textContent = `Outage on some services (${outageCount} service${outageCount > 1 ? 's' : ''})`;
-        }
-
-        // Update last updated time
-        updateLastUpdatedTime();
-    }, 1000); // Check every second
+    
 
     // Function to continuously check status of each website
-    function checkStatus(elementId, url, callback) {
-        const startTime = performance.now();
+    function checkStatus(elementId, url) {
+        return new Promise((resolve) => {
+            const startTime = performance.now();
 
-        fetch(url, { mode: 'no-cors' })
-            .then(response => {
-                const endTime = performance.now();
-                const ping = Math.round(endTime - startTime);
-                updateStatus(elementId, true, ping);
-                if (callback) callback(true);
-            })
-            .catch(error => {
-                const endTime = performance.now();
-                const ping = Math.round(endTime - startTime);
-                updateStatus(elementId, false, ping);
-                if (callback) callback(false);
-            });
+            fetch(url, { mode: 'no-cors' })
+                .then(response => {
+                    updateStatus(elementId, true);
+                    resolve(true);
+                })
+                .catch(error => {
+                    console.error(`Error checking status for ${url}:`, error);
+                    updateStatus(elementId, false);
+                    resolve(false);
+                });
+        });
     }
 
     // Function to update status on the page
-    function updateStatus(elementId, isUp, ping) {
+    function updateStatus(elementId, isUp) {
         const statusIndicator = document.getElementById(`${elementId}-status`);
         const statusText = document.getElementById(`${elementId}-text`);
-        const pingText = document.getElementById(`${elementId}-ping`);
+        const statusMessage = document.getElementById(`${elementId}-message`);
 
         if (isUp) {
             statusIndicator.classList.add('status-up');
             statusIndicator.classList.remove('status-down');
             statusText.textContent = 'Up and Running';
-            pingText.style.fontWeight = 'bold';
-            pingText.style.color = 'green';
-            pingText.textContent = `${ping} ms`;
+            statusMessage.textContent = ''; // Clear any previous messages
+            statusMessage.style.backgroundColor = 'transparent'; // Reset background color
+            statusMessage.style.padding = '0'; // Reset padding
+            statusMessage.style.borderRadius = '0'; // Reset border radius
+            statusMessage.style.fontWeight = 'normal'; // Reset font weight
         } else {
             statusIndicator.classList.add('status-down');
             statusIndicator.classList.remove('status-up');
-            statusText.textContent = 'Major Outage';
-            pingText.textContent = '';
+            statusText.textContent = '';
+            handleOutageMessages(elementId);
+            ManualErrors();
         }
-
-        // Update last updated time whenever status changes
-        updateLastUpdatedTime();
     }
+
+    // Function to handle outage messages based on elapsed time
+    function handleOutageMessages(elementId) {
+        const statusMessage = document.getElementById(`${elementId}-message`);
+        const outageStart = getCurrentMinutes();
+        const statusIndicator = document.getElementById(`${elementId}-status`);
+    
+        // Define messages and corresponding times
+        const outageMessages = [
+            { time: 0, message: "Major Outage Detected", color: '#dc3545', class: 'status-down' }, // Red
+            { time: 10, message: "Problem is Being Investigated", color: '#ffc107', class: 'status-fixing' }, // Orange
+            { time: 20, message: "Problem Solved", color: '#28a745', class: 'status-up' } // Green
+        ];
+    
+        // Function to update message based on elapsed time
+        function updateMessage() {
+            const minutesElapsed = getCurrentMinutes() - outageStart;
+    
+            // Find the message that matches the current elapsed time
+            const messageObj = outageMessages.find(msg => minutesElapsed >= msg.time);
+    
+            // Display the appropriate message and update status indicator class
+            if (messageObj) {
+                statusMessage.textContent = messageObj.message;
+                statusMessage.style.color = messageObj.color;
+                statusMessage.style.backgroundColor = 'black';
+                statusMessage.style.padding = '5px';
+                statusMessage.style.borderRadius = '50px';
+                statusMessage.style.fontWeight = 'bold';
+    
+                // Update status indicator class
+                statusIndicator.classList.remove('status-down', 'status-fixing', 'status-up');
+                statusIndicator.classList.add(messageObj.class);
+            }
+        }
+    
+        // Initial update
+        updateMessage();
+        setInterval(ManualErrors, 1); // Check every 24 hours
+    
+        // Update message every minute
+        const outageTimer = setInterval(updateMessage, 1000 * 60); // Check every minute
+        statusMessage.dataset.intervalId = outageTimer.toString(); // Store interval ID in element data
+    
+        // Stop interval after the last message time
+        const lastMessageTime = outageMessages[outageMessages.length - 1].time;
+        const timeUntilClear = (lastMessageTime - (getCurrentMinutes() - outageStart)) * 1000 * 60;
+        setTimeout(() => {
+            clearInterval(outageTimer);
+            statusMessage.textContent = ''; // Clear message after last message time
+        }, timeUntilClear);
+    }
+    
+    function setStatus(elementId, status) {
+        updateStatus(elementId, status);
+        if (status === 'down') {
+            handleOutageMessages(elementId);
+        }
+    }
+    
+
+    // Initial check
+    function initialCheck() {
+        const statusPromises = websites.map(website => checkStatus(website.id, website.url));
+        Promise.all(statusPromises).then(results => {
+            results.forEach((isUp, index) => {
+                if (!isUp) {
+                    document.getElementById(websites[index].id).click();
+                    localStorage.setItem('lastUpdateTime', getCurrentMinutes());
+                    lastUpdatedTime.textContent = 'Last updated: just now';
+                }
+            });
+        });
+    }
+
+    // Function to perform periodic checks
+    function periodicCheck() {
+        let allUp = true;
+        let outageCount = 0;
+
+        const statusPromises = websites.map(website => checkStatus(website.id, website.url));
+        const statusElements = document.getElementsByClassName('status');
+        const outageElements = [];
+
+        Promise.all(statusPromises).then(results => {
+            results.forEach((isUp, index) => {
+                if (!isUp) {
+                    allUp = false;
+                    outageCount++;
+                    document.getElementById(websites[index].id).click();
+                }
+            });
+
+            // Update overall status message
+            if (outageCount === 0) {
+                overallStatusText.style.color = 'green';
+                overallStatusText.textContent = 'All services up and running';
+            } else {
+                overallStatusText.style.color = '#dc3545';
+                overallStatusText.style.textShadow = '0 0 5px black';
+                overallStatusText.textContent = `Outage on ${outageCount} service${outageCount > 1 ? 's' : ''}`;
+            } if (allow === true && outageCount === 1) {
+                overallStatusText.style.color = '#ffc107';
+                overallStatusText.textContent = `Resolving issues on ${outageCount} service${outageCount > 1 ? 's' : ''}`;
+            } else {
+                overallStatusText.style.color = '#dc3545';
+                overallStatusText.style.textShadow = '0 0 5px black';
+                overallStatusText.textContent = `Outage on ${outageCount} service${outageCount > 1 ? 's' : ''}`;
+            }
+        });
+    }
+
+    // Perform initial check
+    initialCheck();
+
+    periodicCheck();
+    
+    // Update the last updated time on load
+    updateLastUpdatedTime();
+
+    // Update the last updated time every minute
+    setInterval(updateLastUpdatedTime, 60 * 1000);
+
+    // Perform periodic check every 30 seconds
+    setInterval(periodicCheck, 30 * 1000);
+
+    window.setStatus = setStatus;
 });
