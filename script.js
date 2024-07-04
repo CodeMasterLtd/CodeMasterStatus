@@ -110,8 +110,8 @@ document.addEventListener("DOMContentLoaded", function() {
     
         // Define messages and corresponding times
         const outageMessages = [
-            { time: 1, message: "Major Outage Detected", color: '#dc3545', class: 'status-down' }, // Red
-            { time: 0, message: "Problem is Being Investigated", color: '#ffc107', class: 'status-fixing' }, // Orange
+            { time: 0, message: "Major Outage Detected", color: '#dc3545', class: 'status-down' }, // Red
+            { time: 10, message: "Problem is Being Investigated", color: '#ffc107', class: 'status-fixing' }, // Orange
             { time: 20, message: "Problem Solved", color: '#28a745', class: 'status-up' } // Green
         ];
     
@@ -202,7 +202,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 overallStatusText.style.color = '#dc3545';
                 overallStatusText.style.textShadow = '0 0 5px black';
                 overallStatusText.textContent = `Outage on ${outageCount} service${outageCount > 1 ? 's' : ''}`;
-            } if (allow === true || message === true && outageCount === 1) {
+            } if (message === true && outageCount === 1) {
                 overallStatusText.style.color = '#ffc107';
                 overallStatusText.textContent = `Resolving issues on ${outageCount} service${outageCount > 1 ? 's' : ''}`;
             } else {
