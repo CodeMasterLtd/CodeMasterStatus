@@ -176,42 +176,51 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Function to perform periodic checks
-    function periodicCheck() {
-        let allUp = true;
-        let outageCount = 0;
+// Function to perform periodic checks
+// Function to perform periodic checks
+function periodicCheck() {
+    let allUp = true;
+    let outageCount = 0;
 
-        const statusPromises = websites.map(website => checkStatus(website.id, website.url));
-        const statusElements = document.getElementsByClassName('status');
-        const outageElements = [];
+    const statusPromises = websites.map(website => checkStatus(website.id, website.url));
+    const statusElements = document.getElementsByClassName('status1');
 
-        Promise.all(statusPromises).then(results => {
-            results.forEach((isUp, index) => {
-                if (!isUp) {
-                    allUp = false;
-                    outageCount++;
-                    document.getElementById(websites[index].id).click();
-                }
-            });
+    Promise.all(statusPromises).then(results => {
+        results.forEach((isUp, index) => {
+            if (!isUp) {
+                allUp = false;
+                outageCount++;
+                document.getElementById(websites[index].id).click();
+            }
+        });
 
-            // Update overall status message
+        // Update overall status message and apply flashing border
+        for (let element of statusElements) {
+            element.classList.remove('flash-border-green', 'flash-border-yellow', 'flash-border-red'); // Remove any previous flash classes
+
             if (outageCount === 0) {
                 overallStatusText.style.color = 'green';
                 overallStatusText.textContent = 'All services up and running';
+                element.style.borderColor = 'green';
             } else {
-                overallStatusText.style.color = '#dc3545';
-                overallStatusText.style.textShadow = '0 0 5px black';
-                overallStatusText.textContent = `Outage on ${outageCount} service${outageCount > 1 ? 's' : ''}`;
-            } if (message === true && outageCount === 1) {
-                overallStatusText.style.color = '#ffc107';
-                overallStatusText.textContent = `Resolving issues on ${outageCount} service${outageCount > 1 ? 's' : ''}`;
-            } else {
-                overallStatusText.style.color = '#dc3545';
-                overallStatusText.style.textShadow = '0 0 5px black';
-                overallStatusText.textContent = `Outage on ${outageCount} service${outageCount > 1 ? 's' : ''}`;
+                if (message === true && outageCount === 1) {
+                    overallStatusText.style.color = '#ffc107';
+                    overallStatusText.textContent = `Resolving issues on ${outageCount} service${outageCount > 1 ? 's' : ''}`;
+                    element.style.borderColor = '#ffc107';
+                    element.classList.add('flash-border-yellow'); // Add yellow flash class
+                } else {
+                    overallStatusText.style.color = '#dc3545';
+                    overallStatusText.style.textShadow = '0 0 5px black';
+                    overallStatusText.textContent = `Outage on ${outageCount} service${outageCount > 1 ? 's' : ''}`;
+                    element.style.borderColor = '#dc3545';
+                    element.classList.add('flash-border-red'); // Add red flash class
+                }
             }
-        });
-    }
+        }
+    });
+}
+
+
 
     // Perform initial check
     initialCheck();
@@ -234,8 +243,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
             if (currentTheme == "dark" || (currentTheme === null && prefersDarkScheme.matches)) {
                 document.body.classList.add("dark-mode");
+                document.getElementById("theme-switcher").textContent = "☀️";
             } else {
                 document.body.classList.remove("dark-mode");
+                document.getElementById("theme-switcher").textContent = "🌕";
             }
 
             const themeSwitcher = document.getElementById("theme-switcher");
@@ -243,8 +254,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (document.body.classList.contains("dark-mode")) {
                     document.body.classList.remove("dark-mode");
                     localStorage.setItem("theme", "light");
+                    document.getElementById("theme-switcher").textContent = "🌕";
                 } else {
                     document.body.classList.add("dark-mode");
+                    document.getElementById("theme-switcher").textContent = "☀️";
                     localStorage.setItem("theme", "dark");
                 }
             });
