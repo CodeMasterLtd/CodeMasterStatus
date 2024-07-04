@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const websites = [
         { id: 'ltcg', url: 'https://learntocodegame.netlify.app/' },
-        { id: 'cm', url: 'https://codemaster.ltd/' },
         { id: 'cmc', url: 'https://codemasterchallenge.netlify.app/' },
         { id: 'vng', url: 'https://vehiclenamesgenerator.netlify.app/' },
         { id: 'pft', url: 'https://personalfinancetrack.netlify.app/' },
