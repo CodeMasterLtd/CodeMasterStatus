@@ -166,7 +166,7 @@ a:hover {
     }
 
     .status {
-        font-size: 12px;
+        font-size: 11px;
         padding: 10px;
     }
 
@@ -177,5 +177,9 @@ a:hover {
 
     .logo {
         width: 80px;
+    }
+
+    .lut {
+        font-size: 10px;
     }
 }

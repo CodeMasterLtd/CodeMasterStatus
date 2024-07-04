@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
         { id: 'npc', url: 'https://numberplatecreator.netlify.app/' },
         { id: 'fmlua', url: 'https://vehiclefxmanifestgenerator.netlify.app/' },
         { id: 'discord', url: 'https://discord.g/XcEHvPR9qA' },
-        { id: 'mail', url: 'mailto:info@codemaster.ltd' }
+        { id: 'mail', url: 'info@codemaster.ltd' }
     ];
 
     const overallStatusText = document.getElementById('overall-status-text');
