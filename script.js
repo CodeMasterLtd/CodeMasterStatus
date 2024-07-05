@@ -1,5 +1,5 @@
-document.addEventListener("DOMContentLoaded", function() {
 
+document.addEventListener("DOMContentLoaded", function() {
     const websites = [
         { id: 'ltcg', url: 'https://learntocodegame.netlify.app/' },
         { id: 'cmc', url: 'https://codemasterchallenge.netlify.app/' },
@@ -7,36 +7,45 @@ document.addEventListener("DOMContentLoaded", function() {
         { id: 'pft', url: 'https://personalfinancetrack.netlify.app/' },
         { id: 'npc', url: 'https://numberplatecreator.netlify.app/' },
         { id: 'fmlua', url: 'https://vehiclefxmanifestgenerator.netlify.app/' },
-        { id: 'discord', url: 'https://discord.g/XcEHvPR9qA' },
-    ];
+        { id: 'discord', url: 'https://discord.g/XcEHvPR9qA' }
+]
 
     const overallStatusText = document.getElementById('overall-status-text');
     const lastUpdatedTime = document.getElementById('last-updatedTime');
     const dis = document.getElementById(`discord-message`);
     const dis1 = document.getElementById(`discord-status`);
 
-    let allow = false;
-    let message = true;
+    let inves = false;
+    let working = false;
+    let delay = false;
 
     function ManualErrors() {
-        if (allow) {
-            allow = true;
+        if (inves) {
+            inves = true;
 
         dis1.classList.add('status-fixing');
         dis.style.color = '#ffc107';
-        dis.textContent = 'Problem is Being Investigated';
+        dis.textContent = 'We are Investigating';
         } else {
-            allow = false;
+            inves = false;
         }
-        if (!allow && message) {
-            message = true;
+        if (!inves && working) {
+            working = true;
             dis1.classList.add('status-fixing2');
             dis.style.color = '#ffc107';
             dis.textContent = 'We are Working On It';
         } else {
-            message = false;
+            working = false;
         }
-        return allow, message;
+        if (!inves && !working && delay) {
+            delay = true;
+            dis1.classList.add('status-fixing2');
+            dis.style.color = '#ffc107';
+            dis.innerHTML = `Fix Delayed <span style="color: darkgray;">EST: 24 hours</span>`;
+        } else {
+            delay = false;
+        }
+        return inves, working, delay;
     }
 
     // Function to get the current time in minutes
@@ -111,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Define messages and corresponding times
         const outageMessages = [
             { time: 0, message: "Major Outage Detected", color: '#dc3545', class: 'status-down' }, // Red
-            { time: 10, message: "Problem is Being Investigated", color: '#ffc107', class: 'status-fixing' }, // Orange
+            { time: 10, message: "We are Investigating", color: '#ffc107', class: 'status-fixing' }, // Orange
             { time: 20, message: "Problem Solved", color: '#28a745', class: 'status-up' } // Green
         ];
     
@@ -203,7 +212,7 @@ function periodicCheck() {
                 overallStatusText.textContent = 'All services up and running';
                 element.style.borderColor = 'green';
             } else {
-                if (message === true && outageCount === 1) {
+                if (delay === true && outageCount === 1 || working === true && outageCount === 1) {
                     overallStatusText.style.color = '#ffc107';
                     overallStatusText.textContent = `Resolving issues on ${outageCount} service${outageCount > 1 ? 's' : ''}`;
                     element.style.borderColor = '#ffc107';
