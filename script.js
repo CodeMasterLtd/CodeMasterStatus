@@ -2,6 +2,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     const websites = [
         { id: 'ltcg', url: 'https://learntocodegame.netlify.app/' },
+        { id: 'todo', url: 'https://mastertodolist.netlify.app/' },
         { id: 'cmc', url: 'https://codemasterchallenge.netlify.app/' },
         { id: 'vng', url: 'https://vehiclenamesgenerator.netlify.app/' },
         { id: 'pft', url: 'https://personalfinancetrack.netlify.app/' },
@@ -12,8 +13,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const overallStatusText = document.getElementById('overall-status-text');
     const lastUpdatedTime = document.getElementById('last-updatedTime');
-    const dis = document.getElementById(`discord-message`);
-    const dis1 = document.getElementById(`discord-status`);
+    const id = 'todo'
+    const dis = document.getElementById(`${id}-message`);
+    const dis1 = document.getElementById(`${id}-status`);
 
     let inves = false;
     let working = false;
@@ -249,7 +251,6 @@ function periodicCheck() {
 
     const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
             const currentTheme = localStorage.getItem("theme");
-
             if (currentTheme == "dark" || (currentTheme === null && prefersDarkScheme.matches)) {
                 document.body.classList.add("dark-mode");
                 document.getElementById("theme-switcher").textContent = "☀️";

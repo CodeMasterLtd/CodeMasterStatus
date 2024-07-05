@@ -1,4 +1,12 @@
 /* styles.css */
+
+:root {
+    --red: #dc3545;
+    --orange: #ffc107;
+    --green: green;
+    --amber: #dca235;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
@@ -64,8 +72,8 @@ body.dark-mode h1 {
         border-color: transparent;
     }
     50% {
-        border-color: #ffc107;
-        box-shadow: #ffc107 0 0 10px;
+        border-color: var(--orange);
+        box-shadow: var(--orange) 0 0 10px;
         background-color: #ffc1071f;
     }
 }
@@ -75,15 +83,15 @@ body.dark-mode h1 {
         border-color: transparent;
     }
     50% {
-        border-color: #dc3545;
-        box-shadow: #dc3545 0 0 10px;
+        border-color: var(--red);
+        box-shadow: var(--red) 0 0 10px;
         background-color: #dc354621;
     }
 }
 
 .flash-border-green {
-    border-color: green;
-    box-shadow: green 0 0 10px;
+    border-color: var(--green);
+    box-shadow: var(--green) 0 0 10px;
     border-width: 2px;
     border-style: solid;
 }
@@ -131,23 +139,23 @@ body.dark-mode .status {
 }
 
 .status-up {
-    border-color: #28a745;
+    border-color: var(--green);
     box-shadow: #006919 0 0 10px;
 }
 
 .status-down {
-    border-color: #dc3545;
+    border-color: var(--red);
     box-shadow: #7c000d 0 0 10px;
     animation: flashBorderRed 1s infinite;
 }
 
 .status-fixing {
-    border-color: #dca235;
+    border-color: var(--amber);
     box-shadow: rgb(124, 70, 0) 0 0 10px;
 }
 
 .status-fixing2 {
-    border-color: #ffc107;
+    border-color: var(--orange);
     box-shadow: rgb(124, 70, 0) 0 0 10px;
     animation: flashBorderYellow 2s infinite;
 }
