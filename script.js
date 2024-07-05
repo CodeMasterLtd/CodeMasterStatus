@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
         { id: 'pft', url: 'https://personalfinancetrack.netlify.app/' },
         { id: 'npc', url: 'https://numberplatecreator.netlify.app/' },
         { id: 'fmlua', url: 'https://vehiclefxmanifestgenerator.netlify.app/' },
-        { id: 'discord', url: 'https://discord.g/XcEHvPR9qA' }
+        { id: 'discord', url: 'https://discord.gg/XcEHvPR9qA' }
 ]
 
     const overallStatusText = document.getElementById('overall-status-text');
